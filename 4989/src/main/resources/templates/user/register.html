@@ -1,0 +1,62 @@
+
+<section class="user-profile section">
+	<div class="container">
+		<div class="row">
+
+			<div class="col-md-10 offset-md-1 col-lg-12 offset-lg-0">
+				<!-- Edit Personal Info -->
+				<div class="widget personal-info">
+					<h3 class="widget-header user">회원 정보 등록</h3>
+
+					<form action="/user/register" method="post">
+						<!-- Name -->
+						<div class="form-group">
+							<label for="name">이름</label>
+							<#if result?? && result.getFieldError("name")??>
+								<div class="alert alert-danger" role="alert">${result.getFieldError("name").defaultMessage}</div>
+							</#if>
+							<input type="text"
+								class="form-control" id="name" name="name" placeholder="이름" value="${userModel.name?if_exists}">
+						</div>
+						<!-- E-Mail -->
+						<div class="form-group">
+							<label for="email">이메일</label> 
+							<#if result?? && result.getFieldError("email")??>
+								<div class="alert alert-danger" role="alert">${result.getFieldError("email").defaultMessage}</div>
+							</#if>
+							<input type="email"
+								class="form-control" id="email" name="email" value="${userModel.email?if_exists}"
+								placeholder="email@example.com">
+						</div>
+						
+						<!-- Password -->
+						<div class="form-group">
+							<label for="password">패스워드</label> 
+							<#if result?? && result.getFieldError("password")??>
+								<div class="alert alert-danger" role="alert">${result.getFieldError("password").defaultMessage}</div>
+							</#if>
+							<input type="password"
+								class="form-control" id="password" name="password"
+								placeholder="Password">
+						</div>
+						<!-- Confirm Password -->
+						<div class="form-group">
+							<label for="confirm-password">패스워드 확인</label> 
+							<#if result?? && result.getFieldError("confirmPassword")??>
+								<div class="alert alert-danger" role="alert">${result.getFieldError("confirmPassword").defaultMessage}</div>
+							</#if>
+							<input type="password" class="form-control" id="confirm-password"
+								name="confirmPassword" placeholder="Password">
+						</div>
+						
+						<!-- Submit button -->
+						<button id="btn_publish"
+							class="btn btn-outline-primary btn-lg btn-block">가입하기</button>
+						<button id="btn_cancel"
+							class="btn btn-outline-secondary btn-lg btn-block">취소</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

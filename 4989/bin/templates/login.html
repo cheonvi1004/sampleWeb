@@ -1,0 +1,64 @@
+<!-- login form -->
+<div class="modal-dialog" role="document">
+	<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">로그인</h5>
+			<button type="button" class="close" data-dismiss="modal"
+				aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+			<div class="form-group row">
+				<label for="email" class="col-sm-2 col-form-label">이메일</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="email"
+						placeholder="email@example.com">
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="password" class="col-sm-2 col-form-label">패스워드</label>
+				<div class="col-sm-10">
+					<input type="password" class="form-control" id="password"
+						placeholder="Password">
+				</div>
+			</div>
+			<div class="alert alert-danger" role="alert" style="display: none;"
+				area-message="login_fail">이메일과 패스워드를 확인 해주세요.</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button"
+				class="btn btn-outline-secondary btn-lg btn-block"
+				data-dismiss="modal" button-action="register">등록</button>
+			<div></div>
+			<button type="button" class="btn btn-outline-info btn-lg btn-block"
+				button-action="login">로그인</button>
+		</div>
+	</div>
+</div>
+<!-- login form -->
+<script>
+	$(document).ready(
+			function() {
+				$('[button-action=register]').click(function() {
+					window.location.href = '/user/register';
+				});
+
+				$('[button-action=login]').click(
+						function() {
+							var account = new Object();
+							account.email = $('.modal-body input#email').val();
+							account.password = $('.modal-body input#password')
+									.val();
+
+							$.post('/login', account, function(data) {
+								if (data == 'ERROR') {
+									$('[area-message=login_fail]').show()
+											.delay(3000).fadeOut(1000);
+
+								} else {
+									window.location.href = '/';
+								}
+							});
+						});
+
+			});
+</script>

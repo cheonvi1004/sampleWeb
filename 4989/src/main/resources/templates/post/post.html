@@ -1,0 +1,77 @@
+<section class="blog single-blog section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-10 offset-md-1 col-lg-9 offset-lg-0">
+				<div class="block comment">
+					<form id="post_form">
+						<div class="form-group mb-30">
+							<input type="text" class="form-control" id="title" name="title"
+								placeholder="제목">
+						</div>
+						<!-- Message -->
+						<div class="form-group mb-30">
+							<textarea class="form-control" id="editor" rows="8"
+								name="content"></textarea>
+						</div>
+					</form>
+
+					<button id="btn_publish"
+						class="btn btn-outline-info btn-lg btn-block">게시하기</button>
+					<button id="btn_cancel"
+						class="btn btn-outline-secondary btn-lg btn-block">취소</button>
+				</div>
+			</div>
+
+			<#include "/common/side.html">
+		</div>
+	</div>
+</section>
+
+
+
+<script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
+<script>
+	$(document).ready(function() {
+
+		CKEDITOR.config.image_previewText = '';
+		CKEDITOR.replace('editor', {
+			filebrowserImageUploadUrl : '/image/upload',
+			height : 400
+		});
+
+		CKEDITOR.on('dialogDefinition', function(ev) {
+			var dialog = ev.data.definition.dialog;
+			var dialogName = ev.data.name;
+			var dialogDefinition = ev.data.definition;
+
+			switch (dialogName) {
+			case 'image':
+				dialog.on('show', function(obj) {
+					this.selectPage('Upload'); //업로드텝으로 시작
+				});
+
+				//dialogDefinition.removeContents('info');
+				dialogDefinition.removeContents('Link');
+				dialogDefinition.removeContents('advanced');
+				break;
+			}
+		});
+
+		$('#btn_publish').click(function() {
+			var post = new Object();
+			post.title = $('#title').val();
+			post.content = CKEDITOR.instances.editor.getData();
+			$.post("/article/upload", post, function(data) {
+				return alert(data);
+			});
+		});
+
+		$('#btn_cancel').click(function() {
+			CKEDITOR.instances.editor.setData('');
+		});
+	});
+</script>
+
+
+
+
